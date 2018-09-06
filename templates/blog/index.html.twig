@@ -3,18 +3,36 @@
 {% block title %}Hello {{ controller_name }}!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <article>
+        <h2>Titre de l'article</h2>
+        <div class="metadata">Ecrit le 10/05/2018 à 19:00 dans la catégorie Politique</div>
+        <div class="content"><img src="http://placehold.it/350x150" alt="">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, error eveniet nostrum optio sapiente
+                sed.</p>
+            <p>Alias delectus id maiores nesciunt nisi nobis omnis perspiciatis, possimus quaerat repellat sed tempora
+                voluptates!</p>
+            <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a></div>
+    </article>
+    <article>
+        <h2>Titre de l'article</h2>
+        <div class="metadata">Ecrit le 10/05/2018 à 19:00 dans la catégorie Politique</div>
+        <div class="content"><img src="http://placehold.it/350x150" alt="">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci assumenda beatae cumque facere facilis
+                vitae.</p>
+            <p>At, cumque dolore doloribus, ex expedita harum nesciunt officiis quae quis quisquam ut veniam
+                voluptatem!</p>
+            <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a></div>
+    </article>
+    <article>
+        <h2>Titre de l'article</h2>
+        <div class="metadata">Ecrit le 10/05/2018 à 19:00 dans la catégorie Politique</div>
+        <div class="content"><img src="http://placehold.it/350x150" alt="">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi consequatur enim expedita, itaque nemo
+                tenetur.</p>
+            <p>Accusamus aliquam aliquid culpa eaque et, neque nihil, non perferendis placeat quo quod saepe
+                voluptatum.</p>
+            <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a></div>
+    </article>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'src/Controller/BlogController.php'|file_link(0) }}">src/Controller/BlogController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'templates/blog/index.html.twig'|file_link(0) }}">templates/blog/index.html.twig</a></code></li>
-    </ul>
-</div>
 {% endblock %}
