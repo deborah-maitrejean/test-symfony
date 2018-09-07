@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Repository\NewsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -10,19 +11,16 @@ class BlogController extends AbstractController
 {
     /**
      * @Route("/blog", name="blog")
+     * @param NewsRepository $repo
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index()
+    public function index(NewsRepository $repo)
     {
-        $repo = $this->getDoctrine()->getRepository(News::class); // on crée une variable $repo qui demande à Doctrine le repository qui gère l'entité News
-        $post = $repo->find(12); // trouve l'article 12
-        $post = $repo->findOneByTitle('Titre de l\'article'); // trouve l'article dont le titre est
-        $posts = $repo->findByTitle('Titre de l\'article'); // trouve tous les articles dont le titre est
-        $all = $repo->findAll(); // tous les articles
+        $all = $repo->findAll();
 
         return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
-            // je passe à Twig l'ensemble des articles:
-            'posts' => $all // je crée une variable posts qui contient tous les articles
+            'posts' => $all
         ]);
     }
 
@@ -36,13 +34,15 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/blog/article/{id}", name="blog_show")
+     * @param News $post
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show($id) // je passe l'id à la function
+    public function show(News $post) // News c'est le nom du controller
     {
-        $repo = $this->getDoctrine()->getRepository(News::class); // je crée un repository
-        $post = $repo->find($id); // trouve l'article qui à l'id envoyé en paramètre
+        //$repo = $this->getDoctrine()->getRepository(News::class);
+        //$post = $repo->find($id);
         return $this->render('blog/show.html.twig', [
             'post' => $post
-        ]); // je passe un tableau avec les variables que twig va utiliser
+        ]);
     }
 }
