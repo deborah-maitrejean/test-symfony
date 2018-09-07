@@ -4,35 +4,20 @@
 
 {% block body %}
 
-    <article>
-        <h2>Titre de l'article</h2>
-        <div class="metadata">Ecrit le 10/05/2018 à 19:00 dans la catégorie Politique</div>
-        <div class="content"><img src="http://placehold.it/350x150" alt="">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, error eveniet nostrum optio sapiente
-                sed.</p>
-            <p>Alias delectus id maiores nesciunt nisi nobis omnis perspiciatis, possimus quaerat repellat sed tempora
-                voluptates!</p>
-            <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a></div>
-    </article>
-    <article>
-        <h2>Titre de l'article</h2>
-        <div class="metadata">Ecrit le 10/05/2018 à 19:00 dans la catégorie Politique</div>
-        <div class="content"><img src="http://placehold.it/350x150" alt="">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci assumenda beatae cumque facere facilis
-                vitae.</p>
-            <p>At, cumque dolore doloribus, ex expedita harum nesciunt officiis quae quis quisquam ut veniam
-                voluptatem!</p>
-            <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a></div>
-    </article>
-    <article>
-        <h2>Titre de l'article</h2>
-        <div class="metadata">Ecrit le 10/05/2018 à 19:00 dans la catégorie Politique</div>
-        <div class="content"><img src="http://placehold.it/350x150" alt="">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi consequatur enim expedita, itaque nemo
-                tenetur.</p>
-            <p>Accusamus aliquam aliquid culpa eaque et, neque nihil, non perferendis placeat quo quod saepe
-                voluptatum.</p>
-            <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a></div>
-    </article>
+    <section class="articles">
+        {% for post in posts %}
+            <article>
+                <h2>{{ post.title }}</h2> <!-- équivalent sur autre projet à post->getTitle() -->
+                <!-- on utilise un filtre: permet de formater une variable avant de l'afficher -->
+                <div class="metadata">Ecrit le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }} dans la catégorie Politique</div>
+                <div class="content">
+                    <img src="{{ post.image }}" alt="">
+                    <!-- on demande avec le filtre brute d'afficher les données tel quels, avec balises s'il y en a -->
+                    {{ post.content |raw }}
+                    <!-- on ajoute un paramètre à la route, qui est un objet javascript comme du JSON -->
+                    <a href="{{ path('blog_show', {'id': post.id}) }}" class="btn btn-primary">Lire la suite</a></div>
+            </article>
+        {% endfor %}
+    </section>
 
 {% endblock %}
