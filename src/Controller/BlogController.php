@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\News;
 use App\Repository\NewsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
@@ -51,6 +53,16 @@ class BlogController extends AbstractController
      */
     public function create()
     {
-        return $this->render('blog/create.html.twig');
+        $post = new News(); // nouvel article vide prêt à être rempli
+        $form = $this->createFormBuilder($post)
+            ->add('title', TextType::class)
+            ->add('content', TextareaType::class)
+            ->add('image', TextType::class)
+            ->getForm()
+        ;
+
+        return $this->render('blog/create.html.twig', [
+            'postForm' => $form->createView()
+        ]);
     }
 }
