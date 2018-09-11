@@ -1,13 +1,31 @@
 security:
+    encoders:
+        App\Entity\User: #s'adresse à
+            algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: ~ }
+        in_database:                     # je déclare mon provider
+            entity:
+                class: App\Entity\User   # je lui dis qu’il est dans une entity
+                property: email          # on va chercher les users par leur email
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+
+            provider: in_database
+
+            form_login: # option form_login: permet de préciser qu'on utilisera un formulaire de login
+                login_path: security_login # nom de la route, du chemin pour se logger
+                check_path: security_login # l'endroit que j'appelle pour vérifier les informations du formulaire de login
+
+            logout:
+                path: security_logout # la route dont on se sert pour le logout
+                target: blog # où est-on redirigé après la déconnexion
 
             # activate different ways to authenticate
 
