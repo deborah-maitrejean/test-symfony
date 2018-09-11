@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\News;
+use App\Form\CommentType;
 use App\Form\NewsType;
 use App\Repository\NewsRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -40,14 +42,29 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog/article/{id}", name="blog_show")
      * @param News $post
+     * @param Request $request
+     * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show(News $post) // News c'est le nom du controller
-    {
-        //$repo = $this->getDoctrine()->getRepository(News::class);
-        //$post = $repo->find($id);
+    public function show(News $post, Request $request, ObjectManager $manager) // ajouter la request en paramètre pour voir ce qu'il se passe
+    { // Symfony passe alors la request par injection de dépendance
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request); // gère la requête
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setCreatedAt(new \DateTime())
+                ->setPost($post);
+            $manager->persist($comment); // on fait appel au manager pour sauvegarder le commentaire
+            $manager->flush();
+
+            return $this->redirectToRoute('blog_show', ['id' => $post->getId()]); // et on renvoie sur le même article
+        }
+
         return $this->render('blog/show.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'commentForm' => $form->createView() // on passe le formulaire à twig
         ]);
     }
 

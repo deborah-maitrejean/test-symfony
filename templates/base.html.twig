@@ -19,9 +19,17 @@
                         <a class="nav-link" href="{{ path('blog') }}">Articles</a>
                     </li>
                     <li class="nav-item">
-                        <!-- on affiche avec la function path() de Twig la route qui mène à a page create -->
                         <a class="nav-link" href="{{ path('blog_create') }}">Créer un article</a>
                     </li>
+                    {% if not app.user %} <!-- si le user exist -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('security_login') }}">Connexion</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('security_logout') }}">Déconnexion</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
